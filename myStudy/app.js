@@ -5,8 +5,10 @@ var http = require('http');
 var fs = require('fs');
 var cheerio = require('cheerio');
 var request = require('request');
-var nightmare=require('nightmare');
-
+var Nightmare=require('nightmare');
+var nightmare=Nightmare({
+  show:true //显示 electron 窗口
+})
 var i = 0;
 var url = 'http://www.ihchina.cn/5/5_1.html';
 //初始化url
@@ -27,7 +29,12 @@ var url = 'http://www.ihchina.cn/5/5_1.html';
 //     })
 //   })
 // }
-
+  //   function(){
+  //   if(window.qqNews===undefined){}
+  //   console.log('11')
+  //   console.log(window.qqNews)
+  //   console.log($('.main_ccr_content_list_sbdqdw'))
+  // })
 var startRequest=function(x) {
   //采用http模块向服务器发起一次get请求
 
