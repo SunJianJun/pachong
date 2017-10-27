@@ -25,6 +25,7 @@ nightmare
 
       //停止自动刷新
       AutoRefresh();
+      // ChangeCata(1);
       _$qqNews.total = qq.$("totalPage").value;
 
       G.showArtList = function(responseText) {
