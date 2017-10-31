@@ -1,7 +1,7 @@
 var Nightmare = require('nightmare');
 var nightmare = Nightmare({
-  show: true//显示electron窗口
-  // waitTimeout : 5000
+  show: true,//显示electron窗口
+  waitTimeout : 5000
 });
 
 nightmare
@@ -21,7 +21,7 @@ nightmare
   })
   .wait(function(){
 
-    if(page!==1){
+    if(page!==0){
       //国家名录查询
       function getMingLu(catalogId , page ,callback){
         var name = $("#searchName").val();
@@ -30,7 +30,6 @@ nightmare
         var prop4 = $("#prop4").val();
 
         if(name == null){
-          alert("未获取查询条件的名称");
           return false;
         }
         $.ajax({
@@ -53,33 +52,28 @@ nightmare
           dataType: "jsonp",//数据类型为jsonp
           jsonp: "jsonpCallback",//服务端用于接收callback调用的function名的参数
           success: function (data) {
-            qqNews.push(data);
+            qqNews.push(data.currPage);
             callback(true)
           }
         })
       }
-      getMingLu(5,1,function(e){
+
+      return getMingLu(5,page,function(e){
         if(e){
-          return e;
+          page -= 1;
+          return false;
         }
       })
       // $('#mingluList tr:not(#tableList)').each(function(){
       //   var title = $(this).find('a').text();
       //   qqNews.push(title);
       // });
-      nextPage(2);
-      page -= 1;
-      return false;
-    }
-    if(page===1){
-      $('#mingluList tr:not(#tableList)').each(function(){
-        var title = $(this).find('a').text();
-        qqNews.push(title);
-      });
+      // nextPage(2);
+    }else{
       return true;
     }
 
-    return false;
+    // return false;
   })
   .evaluate(function(){
     return qqNews;
